@@ -4,16 +4,16 @@ public class Main {
     private static final Employee[] employeeRecordsStorage = new Employee[10];
 
     public static void main(String[] args) {
-        employeeRecordsStorage[0] = new Employee(1, "Иванов Иван Иванович", 1, 53_000);
-        employeeRecordsStorage[1] = new Employee(2, "Федоров Федор Федорович", 2, 125_000);
-        employeeRecordsStorage[2] = new Employee(3, "Алексеев Алексей Алексеевич", 3, 91_000);
-        employeeRecordsStorage[3] = new Employee(4, "Николаев Николай Николаевич", 4, 55_000);
-        employeeRecordsStorage[4] = new Employee(5, "Андреев Андрей Андреевич", 5, 250_000);
-        employeeRecordsStorage[5] = new Employee(6, "Антонов Антон Антонович", 1, 72_000);
-        employeeRecordsStorage[6] = new Employee(7, "Кириллов Кирилл Кириллович", 2, 27_000);
-        employeeRecordsStorage[7] = new Employee(8, "Артемов Артем Артемович", 3, 63_000);
-        employeeRecordsStorage[8] = new Employee(9, "Романов Роман Романович", 4, 88_000);
-        employeeRecordsStorage[9] = new Employee(10, "Александров Александр Александрович", 5, 110_000);
+        employeeRecordsStorage[0] = new Employee("Иванов Иван Иванович", 1, 53_000);
+        employeeRecordsStorage[1] = new Employee("Федоров Федор Федорович", 2, 125_000);
+        employeeRecordsStorage[2] = new Employee("Алексеев Алексей Алексеевич", 3, 91_000);
+        employeeRecordsStorage[3] = new Employee("Николаев Николай Николаевич", 4, 55_000);
+        employeeRecordsStorage[4] = new Employee("Андреев Андрей Андреевич", 5, 250_000);
+        employeeRecordsStorage[5] = new Employee("Антонов Антон Антонович", 1, 72_000);
+        employeeRecordsStorage[6] = new Employee("Кириллов Кирилл Кириллович", 2, 27_000);
+        employeeRecordsStorage[7] = new Employee("Артемов Артем Артемович", 3, 63_000);
+        employeeRecordsStorage[8] = new Employee("Романов Роман Романович", 4, 88_000);
+        employeeRecordsStorage[9] = new Employee("Александров Александр Александрович", 5, 110_000);
         printAllEmployeesWithAllData();
         calculateTheAmountOfSalaryCosts();
         findEmployeeMinSalary();
@@ -50,7 +50,7 @@ public class Main {
                 min = employeeRecordsStorage[i].getEmployeeSalary();
             }
         }
-        System.out.printf("Сотрудник с максимальной зарплатой: %.2f руб.%n", min);
+        System.out.printf("Сотрудник с минимальной зарплатой: %.2f руб.%n", min);
         return min;
     }
 
@@ -61,7 +61,7 @@ public class Main {
                 max = employeeRecordsStorage[i].getEmployeeSalary();
             }
         }
-        System.out.printf("Сотрудник с минимальной зарплатой: %.2f руб.%n", max);
+        System.out.printf("Сотрудник с максимальной зарплатой: %.2f руб.%n", max);
         return max;
     }
 

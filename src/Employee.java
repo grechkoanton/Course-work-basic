@@ -7,7 +7,7 @@ public class Employee {
     private static int counter = 1;
     private int id;
 
-    public Employee(int counter, String fullName, int department, double employeeSalary) {
+    public Employee(String fullName, int department, double employeeSalary) {
         this.fullName = fullName;
         this.department = department;
         this.employeeSalary = employeeSalary;
@@ -30,12 +30,8 @@ public class Employee {
         return id;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }                  // не требуется
-
     public void setDepartment(int department) {
-        if ((department < 1 || department > 6)) {
+        if (department < 1 || department > 5) {
             throw new IllegalArgumentException("Такого отдела в компании не существует");
         }
         this.department = department;
@@ -44,10 +40,6 @@ public class Employee {
     public void setEmployeeSalary(double employeeSalary) {
         this.employeeSalary = employeeSalary;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }                   // не требуется
 
     @Override
     public boolean equals(Object o) {
