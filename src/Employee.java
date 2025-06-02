@@ -8,6 +8,9 @@ public class Employee {
     private int id;
 
     public Employee(String fullName, int department, double employeeSalary) {
+        if (department < 1 || department > 5) {
+            throw new IllegalArgumentException("Такого отдела в компании не существует");
+        }
         this.fullName = fullName;
         this.department = department;
         this.employeeSalary = employeeSalary;
@@ -55,6 +58,19 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "ID: " + id + ". ФИО: " + fullName + ". Отдел: " + department + ". Зарплата: " + employeeSalary + " руб.";
+        return "Employee " +
+                "id = " + id +
+                ", fullName = '" + fullName + '\'' +
+                ", department = " + department +
+                ", employeeSalary = " + employeeSalary +
+                " руб.";
+    }
+
+    public String toStringDataWithoutDepartment() {
+        return "Employee " +
+                "id = " + id +
+                ", fullName = '" + fullName + '\'' +
+                ",employeeSalary = " + employeeSalary +
+                " руб.";
     }
 }

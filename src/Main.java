@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Main {
     private static final Employee[] employeeRecordsStorage = new Employee[10];
 
@@ -14,20 +12,50 @@ public class Main {
         employeeRecordsStorage[7] = new Employee("Артемов Артем Артемович", 3, 63_000);
         employeeRecordsStorage[8] = new Employee("Романов Роман Романович", 4, 88_000);
         employeeRecordsStorage[9] = new Employee("Александров Александр Александрович", 5, 110_000);
+
+        printTask("ЗАДАЧИ БАЗОВОЙ СЛОЖНОСТИ.");
+        System.out.println("Список всех сотрудников со всеми данными:");
         printAllEmployeesWithAllData();
-        calculateTheAmountOfSalaryCosts();
-        findEmployeeMinSalary();
-        findEmployeeMaxSalary();
-        calculateTheAverageValueOfSalaries();
+        System.out.println("Сумма затрат компании на ЗП в месяц: " + calculateTheAmountOfSalaryCosts() + " руб.");
+        System.out.println("Сотрудник с минимальной ЗП: " + findEmployeeMinSalary());
+        System.out.println("Сотрудник с максимальной ЗП: " + findEmployeeMaxSalary());
+        System.out.println("Среднее значение ЗП в компании: " + calculateTheAverageValueOfSalaries() + " руб.");
+        System.out.println("ФИО всех сотрудников:");
         printTheFullNamesOfAllEmployees();
+
+        printTask("ЗАДАЧИ ПОВЫШЕННОЙ СЛОЖНОСТИ.");
+        int department1 = 1;
+        int department2 = 2;
+        int department3 = 3;
+        int department4 = 4;
+        int department5 = 5;
+        double percent = 0.15;
+        int salaryNumberLimit = 100_000;
+        System.out.println("Изменение (повышение) ЗП у всех сотрудников на величину аргумента в %:");
+        indexSalaryAllEmployees();
+        System.out.println("Минимальная ЗП сотрудника " + department4 +" отдела: " + findMinSalaryDepartment(department4));
+        System.out.println("Максимальная ЗП сотрудника " + department2 +" отдела: " + findMaxSalaryDepartment(department2));
+        System.out.println("Сумма затрат на ЗП по " + department5 + " отделу: " + calculateAmountOfSalaryDepartment(department5) + " руб.");
+        System.out.println("Среднее ЗП по " + department3 + " отделу " + calculateTheAverageValueOfSalariesDepartment(department3, 2) + " руб.");
+        System.out.println("Индексация (повышение) ЗП всех сотрудников " + department3 + " отдела на " + percent + " %:");
+        indexSalaryDepartment(department3, percent);
+        System.out.println("Данные всех сотрудников " + department1 + " отдела (все данные, кроме отдела:");
+        printEmployeesDataWithoutDepartment(department1);
+        System.out.println("Все сотрудники с ЗП меньше " + salaryNumberLimit + " руб." + " (распечатать id, ФИО, ЗП):");
+        printAllEmployeesSalaryLessThanNumber(salaryNumberLimit);
+        System.out.println("Все сотрудники с ЗП больше " + salaryNumberLimit + " руб." + " (распечатать id, ФИО, ЗП):");
+        printAllEmployeesSalaryMoreThanNumber(salaryNumberLimit);
+    }
+
+    public static void printTask(String task) {
+        System.out.println(task);
     }
 
     public static void printAllEmployeesWithAllData() {
-        System.out.println("Данные сотрудников: ");
         for (int i = 0; i < employeeRecordsStorage.length; i++) {
             if (employeeRecordsStorage[i] != null) {
+                System.out.println(employeeRecordsStorage[i]);
             }
-            System.out.println(employeeRecordsStorage[i]);
         }
     }
 
@@ -35,56 +63,130 @@ public class Main {
         double sum = 0;
         for (int i = 0; i < employeeRecordsStorage.length; i++) {
             if (employeeRecordsStorage[i] != null) {
+                sum += employeeRecordsStorage[i].getEmployeeSalary();
             }
-            sum += employeeRecordsStorage[i].getEmployeeSalary();
         }
-        System.out.printf("Сумма затрат на ЗП в месяц: %.2f руб.%n", sum);
         return sum;
     }
 
-    public static double findEmployeeMinSalary() {
-        double min = Double.MAX_VALUE;
+    public static Employee findEmployeeMinSalary() {
+        Employee minSalary = null;
         for (int i = 0; i < employeeRecordsStorage.length; i++) {
-            if (employeeRecordsStorage[i].getEmployeeSalary() != 0 && employeeRecordsStorage[i].getEmployeeSalary() < min) {
-
-                min = employeeRecordsStorage[i].getEmployeeSalary();
+            if (minSalary == null || employeeRecordsStorage[i].getEmployeeSalary() < minSalary.getEmployeeSalary()) {
+                minSalary = employeeRecordsStorage[i];
             }
         }
-        System.out.printf("Сотрудник с минимальной зарплатой: %.2f руб.%n", min);
-        return min;
+        return minSalary;
     }
 
-    public static double findEmployeeMaxSalary() {
-        double max = Double.MIN_VALUE;
+    public static Employee findEmployeeMaxSalary() {
+        Employee maxSalary = null;
         for (int i = 0; i < employeeRecordsStorage.length; i++) {
-            if (employeeRecordsStorage[i].getEmployeeSalary() != 0 && employeeRecordsStorage[i].getEmployeeSalary() > max) {
-                max = employeeRecordsStorage[i].getEmployeeSalary();
+            if (maxSalary == null || employeeRecordsStorage[i].getEmployeeSalary() > maxSalary.getEmployeeSalary()) {
+                maxSalary = employeeRecordsStorage[i];
             }
         }
-        System.out.printf("Сотрудник с максимальной зарплатой: %.2f руб.%n", max);
-        return max;
+        return maxSalary;
     }
 
     public static double calculateTheAverageValueOfSalaries() {
-        double sum = 0;
-        int count = 0;
-        for (int i = 0; i < employeeRecordsStorage.length; i++) {
-            if (employeeRecordsStorage[i].getEmployeeSalary() != 0) {
-                sum += employeeRecordsStorage[i].getEmployeeSalary();
-                count++;
-            }
-        }
-        System.out.printf("Среднее значение зарплат: %.2f руб.%n", (double) sum / count);
-        return (double) sum / count;
+        double averageSalary = (double) calculateTheAmountOfSalaryCosts() / employeeRecordsStorage.length;
+        return averageSalary;
     }
 
     public static void printTheFullNamesOfAllEmployees() {
-        System.out.println("ФИО всех сотрудников: ");
         for (int i = 0; i < employeeRecordsStorage.length; i++) {
             if (employeeRecordsStorage[i].getFullName() != null) {
-
+                System.out.println(employeeRecordsStorage[i].getFullName());
             }
-            System.out.println(employeeRecordsStorage[i].getId() + "." + employeeRecordsStorage[i].getFullName());
+        }
+    }
+
+    public static void indexSalaryAllEmployees() {
+        double percent = 0.1;
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i] != null) {
+                employeeRecordsStorage[i].setEmployeeSalary(employeeRecordsStorage[i].getEmployeeSalary() + employeeRecordsStorage[i].getEmployeeSalary() * percent);
+                System.out.println(employeeRecordsStorage[i]);
+            }
+        }
+    }
+
+    public static Employee findMinSalaryDepartment(int department) {
+        Employee minSalary = null;
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i].getDepartment() == department) {
+                if (minSalary == null || employeeRecordsStorage[i].getEmployeeSalary() < minSalary.getEmployeeSalary()) {
+                    minSalary = employeeRecordsStorage[i];
+                }
+            }
+        }
+        return minSalary;
+    }
+
+    public static Employee findMaxSalaryDepartment(int department) {
+        Employee maxSalary = null;
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i].getDepartment() == department) {
+                if (maxSalary == null || employeeRecordsStorage[i].getEmployeeSalary() > maxSalary.getEmployeeSalary()) {
+                    maxSalary = employeeRecordsStorage[i];
+                }
+            }
+        }
+        return maxSalary;
+    }
+
+    public static double calculateAmountOfSalaryDepartment(int department) {
+        double sum = 0;
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i] != null && employeeRecordsStorage[i].getDepartment() == department) {
+                sum += employeeRecordsStorage[i].getEmployeeSalary();
+            }
+        }
+        return sum;
+    }
+
+    public static double calculateTheAverageValueOfSalariesDepartment(int department, int employees) {
+        double sum = 0;
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i] != null && employeeRecordsStorage[i].getDepartment() == department) {
+                sum += employeeRecordsStorage[i].getEmployeeSalary();
+            }
+        }
+        sum = (double) sum / employees;
+        return sum;
+    }
+
+    public static void indexSalaryDepartment(int department, double prc) {
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i] != null && employeeRecordsStorage[i].getDepartment() == department) {
+                employeeRecordsStorage[i].setEmployeeSalary(employeeRecordsStorage[i].getEmployeeSalary() + employeeRecordsStorage[i].getEmployeeSalary() * prc);
+                System.out.println(employeeRecordsStorage[i]);
+            }
+        }
+    }
+
+    public static void printEmployeesDataWithoutDepartment(int department) {
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i] != null && employeeRecordsStorage[i].getDepartment() == department) {
+                System.out.println(employeeRecordsStorage[i].toStringDataWithoutDepartment());
+            }
+        }
+    }
+
+    public static void printAllEmployeesSalaryLessThanNumber(double salaryNumber) {
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i] != null && employeeRecordsStorage[i].getEmployeeSalary() < salaryNumber) {
+                System.out.println(employeeRecordsStorage[i].toStringDataWithoutDepartment());
+            }
+        }
+    }
+    public static void printAllEmployeesSalaryMoreThanNumber(double salaryNumber) {
+        for (int i = 0; i < employeeRecordsStorage.length; i++) {
+            if (employeeRecordsStorage[i] != null && employeeRecordsStorage[i].getEmployeeSalary() >= salaryNumber) {
+                System.out.println(employeeRecordsStorage[i].toStringDataWithoutDepartment());
+            }
         }
     }
 }
+
